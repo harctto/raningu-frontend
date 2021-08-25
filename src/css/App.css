@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+* {
+  font-family: 'Righteous', cursive;
+}
+
+.content-container {
+  background-image: url('../images/bg-content.png');
+  @apply
+  w-4/5
+  bg-cover
+  float-right;
+}
+
+/* sidebar */
+
+.active {
+  @apply
+  transition 
+  duration-700
+  bg-whitemain;
+}
+
+.sidebar-div {
+  @apply
+  w-1/5 
+  bottom-0 
+  top-0 
+  left-0 
+  bg-bluemain 
+  fixed 
+  h-screen 
+  max-h-screen 
+  justify-center;
+}
+
+.sidebar-logo {
+  @apply
+  flex 
+  flex-row 
+  justify-center 
+  my-8;
+}
+
+.sidebar-logo>img {
+  @apply
+  w-14
+  h-14
+  sm:w-20
+  sm:h-20;
+}
+
+.sidebar-logo span {
+  @apply 
+  text-whitemain 
+  self-center
+  text-2xl
+  hidden
+  xl:text-4xl
+  sm:block;
+}
+
+.menu-div {
+  @apply 
+  mt-8
+  mb-5 
+  text-whitemain
+  sm:mt-20;
+}
+
+.menu-div .item {
+  @apply 
+  flex 
+  flex-row 
+  mb-3 
+  py-2
+  pl-1.5
+  ml-3
+  text-center
+  rounded-md
+  ease-in-out
+  transition 
+  duration-500
+  hover:text-bluemain 
+  hover:bg-whitemain 
+  hover:mx-4 
+  hover:py-3 
+  hover:rounded-md 
+  hover:ease-in-out
+  sm:ml-0
+  sm:pl-4 ;
+}
+
+.menu-div .item span {
+  @apply
+  ml-4
+  hidden
+  sm:block;
+}
+
+.sidebar-div .control-div {
+  @apply
+  mt-5
+  mb-8 
+  text-whitemain;
+}
+
+.active .item {
+  @apply
+  text-bluemain 
+  bg-whitemain 
+  mx-4
+  py-3
+  rounded-md;
+}
+
+.control-div .btn-control {
+  @apply
+  flex-row 
+  mx-4 
+  py-2 
+  mb-3 
+  rounded-md 
+  justify-center 
+  cursor-pointer
+  ease-in-out
+  duration-500 
+  hover:ease-in-out 
+  hover:text-xl
+  hover:duration-500;
+}
+
+.profile {
+  @apply
+  flex 
+  flex-col
+  justify-center 
+  items-center
+  h-auto 
+  mb-8 
+  absolute 
+  w-full 
+  xl:flex-row;
+}
+
+.profile img {
+  @apply
+  rounded-full 
+  border-2
+  border-graymain
+  border-opacity-100
+  w-12
+  sm:border-4 
+  xl:w-16;
+}
+
+.profile span {
+  @apply
+  text-whitemain 
+  self-center 
+  hidden
+  ml-2 text-base
+  lg:block
+  sm:block;
+}
+
+.modal-pop-div {
+  @apply
+  inline-block
+  w-full
+  max-w-md
+  p-6
+  my-8
+  overflow-hidden
+  align-middle
+  transition-all
+  transform
+  border-4
+  border-graymain
+  bg-whitemain
+  shadow-2xl
+  rounded-2xl
+  text-center 
+  font-medium 
+  leading-6 
+  text-gray-900;
+}
+
+.modal-pop-div .clsbtn {
+  @apply
+  inline-flex 
+  justify-center 
+  px-4 
+  py-2 
+  text-sm 
+  text-gray-900
+  bg-graymain
+  border 
+  rounded-md 
+  hover:bg-orangemain
+  hover:text-whitemain
+  focus:outline-none;
+}
+
+/* Signin */
+.auth-signin img {
+  @apply
+  mx-2
+  w-10
+  cursor-pointer
+  bg-whitemain
+  rounded-xl
+  sm:w-16;
+}

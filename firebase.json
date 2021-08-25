@@ -1,0 +1,34 @@
+{
+  "emulators": {
+    "hosting": {
+      "target": "raningu",
+      "port": 5000,
+      "host": "raningu--preview-live-60ahtr6x"
+    }
+  },
+  "hosting": {
+    "headers": [
+      {
+        "source": "/service-worker.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ],
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
