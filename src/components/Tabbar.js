@@ -3,7 +3,7 @@ import WebLogo from '../images/logo.png';
 import { NavLink, Link } from 'react-router-dom';
 import * as HiIcons from 'react-icons/hi';
 import { Dialog, Transition } from '@headlessui/react'
-import { signOutHandle } from '../services/FirebaseConfig';
+import { signOut } from '../services/FirebaseConfig';
 
 function Tabbar({ user }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -54,16 +54,16 @@ function Tabbar({ user }) {
                 <div className="btn-control text-bluemain bg-whitemain sm:hidden" onClick={openModal}>
                     <HiIcons.HiOutlineUser size="24px" className="ml-1.5" />
                 </div>
-                <NavLink to='/'>
-                    <div className="btn-control text-whitemain bg-orangemain hidden sm:flex">
-                        <button type="button" onClick={() => signOutHandle}>
+                
+                    <div className="btn-control text-whitemain bg-orangemain hidden sm:flex" onClick={signOut}>
+                        <button type="button">
                             Sign Out
                         </button>
                     </div>
                     <div className="btn-control text-whitemain bg-orangemain flex sm:hidden">
                         <HiIcons.HiLogout size="24px" className="ml-1.5" />
                     </div>
-                </NavLink>
+                
             </div>
             <div className="profile">
                 <img src={user.photoURL} alt="profile" onClick={openModal} />

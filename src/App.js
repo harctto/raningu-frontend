@@ -2,7 +2,7 @@
 import './css/App.css';
 //lib-import
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import firebase from './services/FirebaseConfig'
 //components
 // eslint-disable-next-line
@@ -28,7 +28,6 @@ function App() {
 
   return (
     <Router>
-      <Switch>
         <Route exact path="/">
           <Signin user={user} />
         </Route>
@@ -48,7 +47,6 @@ function App() {
         <Route exact path="/stats">
           {user ? <Stats user={user} /> : <Redirect to="/" />}
         </Route>
-      </Switch>
     </Router>
   );
 }

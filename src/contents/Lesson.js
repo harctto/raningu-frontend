@@ -1,25 +1,26 @@
 import React from 'react';
-import Hiragana from '../json/hira.json'
-import Katakana from '../json/kana.json'
+import LessonAPI from '../json/LessonAPI.json';
 import Tabbar from '../components/Tabbar';
+import Card from '../components/Card';
 
-function Lesson({user}) {
+function Lesson({ user }) {
 
     return (
         <>
-            <Tabbar user={user}/>
-            <div className="content-container">
+            <Tabbar user={user} />
+            <div className="content-container h-screen">
+                <span>Example Word</span>
                 <div className="flex flex-wrap flex-row">
-                    {Hiragana.map((data) => {
-                        return <img src={data.img} className="w-15" alt={data.read} />
+                    {LessonAPI.hira.map((data) => {
+                        return <img src={data.img} className="w-16" alt={data.read} />
                     })}
                 </div>
                 <div className="w-full bg-black h-2">
                     &nbsp;
                 </div>
                 <div className="flex flex-wrap flex-row">
-                    {Katakana.map((data) => {
-                        return <img src={data.img} className="w-15" alt={data.read} />
+                    {LessonAPI.kana.map((data) => {
+                        return <img src={data.img} className="w-16" alt={data.read} />
                     })}
                 </div>
             </div>

@@ -1,14 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
-* {
-  font-family: 'Righteous', cursive;
-}
-
 .content-container {
   background-image: url('../images/bg-content.png');
   @apply
   w-4/5
   bg-cover
+  bg-no-repeat
   float-right;
 }
 
@@ -19,6 +16,10 @@
   transition 
   duration-700
   bg-whitemain;
+}
+
+.TiTle {
+  text-shadow: 10px 10px 0px #B9D1EE;
 }
 
 .sidebar-div {
@@ -211,4 +212,8 @@
   bg-whitemain
   rounded-xl
   sm:w-16;
+}
+
+.home {
+  background-image: url('../images/home-img.png');
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { signInWithFacebook, signInWithGoogle, singInWithGithub } from '../services/FirebaseConfig';
 //LocalIMG
 import Logo from '../images/logo192.png'
@@ -9,15 +9,29 @@ import GhLogo from '../images/gh-icon.png'
 
 //export
 function Signin({ user }) {
+    const history = useHistory();
 
     const [email, setKeep] = useState('');
+
+    const handleInput = (e) => {
+        setKeep(e.target.value)
+    }
+
+    const handleCheckInput = (e) => {
+        if (user) {
+            history.push("/home");
+        } else {
+            window.alert('Please login first')
+        }
+    }
 
     useEffect(() => {
         if (user) {
             setKeep(user.email);
+        } else {
+            setKeep('Login system is in process');
         }
     }, [user])
-
 
     return (
         <div class="flex flex-center items-center justify-center bg-bluemain overflow-hidden h-screen">
@@ -32,20 +46,20 @@ function Signin({ user }) {
                 <div class="mt-10 mx-8 transform">
                     <div class="mb-3 pt-2 rounded bg-gray-200">
                         <label class="text-gray-700 text-sm font-bold mb-1 ml-3 hidden sm:block" for="email">Email</label>
-                        <input type="text" id="email-big" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-8 border-gray-300 focus:border-orangemain focus:mx-4 transition duration-500 px-3 pb-1 hidden sm:block" value={email} />
-                        <input type="text" id="email-small" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-8 border-gray-300 focus:border-orangemain focus:mx-4 transition duration-500 px-3 pb-1 block sm:hidden" placeholder="Email" value={email} />
+                        <input type="text" id="email-big" class="bg-gray-200 rounded w-full text-gray-400 focus:outline-none border-b-8 border-gray-300 focus:border-orangemain focus:mx-4 transition duration-500 px-3 pb-1 hidden sm:block" value={email} onChange={handleInput} defaultValue={'In process. . .'} required disabled />
+                        <input type="text" id="email-small" class="bg-gray-200 rounded w-full text-gray-400 focus:outline-none border-b-8 border-gray-300 focus:border-orangemain focus:mx-4 transition duration-500 px-3 pb-1 block sm:hidden" placeholder="Email" value={email} onChange={handleInput} defaultValue={null} required disabled />
                     </div>
                     <div class="mb-3 pt-2 rounded bg-gray-200">
                         <label class="text-gray-700 text-sm font-bold mb-1 ml-3 hidden sm:block" for="password">Password</label>
-                        <input type="password" id="password-big" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-8 border-gray-300 focus:border-orangemain focus:mx-4 transition duration-500 px-3 pb-1 hidden sm:block" />
-                        <input type="password" id="password-small" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-8 border-gray-300 focus:border-orangemain focus:mx-4 transition duration-500 px-3 pb-1 block sm:hidden" placeholder="Password" />
+                        <input type="text" id="password-big" class="bg-gray-200 rounded w-full text-gray-400 focus:outline-none border-b-8 border-gray-300 focus:border-orangemain focus:mx-4 transition duration-500 px-3 pb-1 hidden sm:block" value='Please login with Google, Facebook or Github first' disabled />
+                        <input type="text" id="password-small" class="bg-gray-200 rounded w-full text-gray-400 focus:outline-none border-b-8 border-gray-300 focus:border-orangemain focus:mx-4 transition duration-500 px-3 pb-1 block sm:hidden" placeholder="Password" value='Please login with Google, Facebook or Github first' disabled />
                     </div>
                     <div class="flex justify-end">
                         <a href="/" class="text-sm text-whitemain hover:text-white hover:underline mb-3">Forgot your password?</a>
                     </div>
 
                     <Link to="/home">
-                        <button class="bg-orangemain hover:bg-lightorange hover:text-2xl text-white text-xl font-bold py-4 rounded shadow-lg hover:shadow-xl transition duration-500 w-full" type="submit">Sign In</button>
+                        <button class="bg-orangemain hover:bg-lightorange hover:text-2xl text-white text-xl font-bold py-4 rounded shadow-lg hover:shadow-xl transition duration-500 w-full" type="submit" onClick={handleCheckInput}>Sign In</button>
                     </Link>
                 </div>
 

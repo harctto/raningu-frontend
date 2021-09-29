@@ -1,24 +1,12 @@
-import React, { useState } from 'react';
-import Tabbar from '../components/Tabbar';
-import { Link } from 'react-router-dom'
+import React from 'react'
+import Tabbar from '../components/Tabbar'
 
 function Quiz({user}) {
-    const [text, setText] = useState('')
-    console.log(text)
-    const handleInput = (e) => {
-        setText(e.target.value)
-    }
-    const handleClick = () => {
-        console.log('fsdfds' + { text })
-    }
     return (
         <>
-            <Tabbar user={user}/>
-            <div className="content-container">
-                <input type="text" onChange={e => handleInput(e)}></input>
-                <Link to={{ pathname: '/canvas', state: { name: {text} } }} onClick={handleClick}>
-                    ddsfasfd
-                </Link>
+            <Tabbar user={user} />
+            <div className="content-container h-screen justify-center flex items-center text-lg sm:text-9xl">
+                Quiz In process....
             </div>
         </>
     )

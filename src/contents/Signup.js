@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 // eslint-disable-next-line
 import { Link, Redirect } from 'react-router-dom';
 // eslint-disable-next-line
