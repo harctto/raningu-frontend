@@ -27,7 +27,7 @@
   w-1/5 
   bottom-0 
   top-0 
-  left-0 
+  left-0
   bg-bluemain 
   fixed 
   h-screen 
@@ -40,6 +40,8 @@
   flex 
   flex-row 
   justify-center 
+  ml-0
+  sm:-ml-5
   my-8;
 }
 
@@ -216,4 +218,8 @@
 
 .home {
   background-image: url('../images/home-img.png');
+}
+
+.color-box {
+  box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px !important;
 }
