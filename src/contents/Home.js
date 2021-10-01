@@ -1,6 +1,8 @@
 import React from 'react';
 import Tabbar from '../components/Tabbar';
 import Card from '../components/Card';
+import { NavLink } from 'react-router-dom';
+
 function Home({ user }) {
     return (
         <>
@@ -13,9 +15,15 @@ function Home({ user }) {
                             <span className="bg-white shadow-md px-4 rounded-lg font-medium sm:px-12">ようこそ！ - <span className="font-semibold">{user.displayName}</span></span>
                         </div>
                         <div className="flex sm:flex-row justify-center flex-col">
-                            <Card items={'Lesson'}/>
-                            <Card items={'Quiz'}/>
-                            <Card items={'Canvas'}/>
+                            <NavLink to="/lesson">
+                                <Card items={'Lesson'} />
+                            </NavLink>
+                            <NavLink to="/quiz">
+                                <Card items={'Quiz'} />
+                            </NavLink>
+                            <NavLink to="/canvas">
+                                <Card items={'Canvas'} />
+                            </NavLink>
                         </div>
                     </div>
                 </div>

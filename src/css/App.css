@@ -82,7 +82,7 @@
   text-center
   rounded-md
   ease-in-out
-  transition 
+  transition-all
   duration-500
   hover:text-bluemain 
   hover:bg-whitemain 
@@ -222,4 +222,8 @@
 
 .color-box {
   box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px !important;
+}
+
+.rs-play svg {
+  width: 28px !important;
 }

@@ -3,16 +3,17 @@ import Tabbar from '../components/Tabbar';
 import CanvasDraw from "react-canvas-draw";
 import { RangeStepInput } from 'react-range-step-input';
 import { SketchPicker } from 'react-color';
+import imgTest from '../images/words/ba.png'
 
 class Canvas extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            color: "#000000",
-            width: 800,
+            color: "#ffda00",
+            width: 700,
             height: 600,
-            brushRadius: 3,
-            lazyRadius: 5
+            brushRadius: 20,
+            lazyRadius: 5,
         }
     }
 
@@ -38,7 +39,7 @@ class Canvas extends Component {
                             <div className="mx-2">
                                 <label>Brush-Radius : {this.state.brushRadius}</label>
                                 <RangeStepInput
-                                    min={1} max={24}
+                                    min={1} max={40}
                                     value={this.state.brushRadius} step={1}
                                     onChange={e =>
                                         this.setState({ brushRadius: parseInt(e.target.value, 10) })
@@ -65,6 +66,7 @@ class Canvas extends Component {
                             lazyRadius={this.state.lazyRadius}
                             canvasWidth={this.state.width}
                             canvasHeight={this.state.height}
+                            imgSrc={imgTest}
                             className="my-2 rounded-xl shadow-sm"
                         />
                     </div>

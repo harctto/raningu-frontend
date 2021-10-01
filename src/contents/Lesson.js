@@ -15,7 +15,7 @@ function Lesson({ user }) {
         axios.get(LessonURL_2).then(res => {
             setLesson2(res.data)
         });
-    },[])
+    }, [])
 
     return (
         <>

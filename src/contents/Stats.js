@@ -1,40 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Tabbar from '../components/Tabbar';
-import axios from 'axios';
-const API_URL = 'https://covid19.ddc.moph.go.th/api/Cases/today-cases-by-provinces'
+import { Pie } from 'react-chartjs-2';
+
+const data = {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [
+        {
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+            ],
+            borderWidth: 1,
+        },
+    ],
+};
 
 function Stats({ user }) {
-    const [value, setValue] = useState([]);
-
-    useEffect(() => {
-        axios.get(API_URL).then(res => {
-            setValue(res.data);
-        });
-    }, [])
-
     return (
         <>
             <Tabbar user={user} />
-            <div className="content-container">
-                <span className="text-2xl">Test API Call with COVID API</span>
-                <table className="table-fixed">
-                    <thead className=" bg-blue-300">
-                        <tr>
-                            <th className="w-2/5">Provinces</th>
-                            <th className="w-1/5">New Case</th>
-                            <th className="w-1/5">Total Case</th>
-                        </tr>
-                    </thead>
-                    {value && value.map((data =>
-                        <tbody className="bg-blue-100">
-                            <tr>
-                                <td>{data.province}</td>
-                                <td>{data.new_case}</td>
-                                <td>{data.total_case}</td>
-                            </tr>
-                        </tbody>
-                    ))}
-                </table>
+            <div className="content-container h-screen">
+                <Pie 
+                    data={data} 
+                    width={400}
+                    height={400}
+                    options={{ maintainAspectRatio: false }}
+                />
             </div>
         </>
     )
