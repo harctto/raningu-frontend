@@ -25,3 +25,6 @@ This is final project Web Programming
 
 ## Website Deploy link
 [Raningu](https://websitename-csc361.web.app/)
+
+## Figma Design
+[Figma](https://www.figma.com/file/yzVHWtBewUSjG8fDeHyuqS/Web-Pro-Design?node-id=0%3A1&viewport=241%2C48%2C0.24)
