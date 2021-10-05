@@ -1,15 +1,16 @@
 import { React, useState, Fragment } from 'react';
-import WebLogo from '../images/logo.png';
-import { NavLink, Link } from 'react-router-dom';
 import * as HiIcons from 'react-icons/hi';
+import { NavLink, Link } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react'
 import { signOut, signInWithFacebook, signInWithGoogle, singInWithGithub } from '../services/FirebaseConfig';
-//LocalIMG
 import GgLogo from '../images/gg-icon.png'
 import FbLogo from '../images/fb-icon.png'
 import GhLogo from '../images/gh-icon.png'
 
-function Tabbar({ user }) {
+function MobileNav({ user }) {
+    const [click, setClick] = useState(false);
+    const handleClick = () => setClick(!click);
+    const closeMobileMenu = () => setClick(false);
     const [isOpen, setIsOpen] = useState(false);
 
     const menuItems = [
@@ -36,64 +37,46 @@ function Tabbar({ user }) {
     }
 
     return (
-        <aside className="sidebar-div">
-            <Link to="/home">
-                <div className="sidebar-logo">
-                    <img src={WebLogo} alt="" />
-                    <span>Rāningu</span>
-                </div>
-            </Link>
-            <div className="menu-div">
+        <div className="sm:hidden relative">
+            <div className="w-full h-16 flex bg-bluemain items-center">
+                <HiIcons.HiViewList className="ml-2 text-white" size="35px" onClick={handleClick} />
+            </div>
+            <ul className={click ? "nav-options active" : "nav-options"}>
                 {menuItems.map((data) => {
-                    return <NavLink exact activeClassName="active" to={data.path} >
-                        <div className="item">
+                    return <NavLink exact activeClassName="activeMobile" to={data.path} onClick={closeMobileMenu}>
+                        <div className="option">
                             {data.icons}
                             <span>{data.name}</span>
                         </div>
                     </NavLink>
                 })}
-                {user ? <NavLink exact activeClassName="active" to='/stats' >
-                    <div className="item">
+                {user ? <NavLink exact activeClassName="activeMobile" to='/stats' onClick={closeMobileMenu}>
+                    <div className="option">
                         <HiIcons.HiChartPie size="24px" />
                         <span>Statistics</span>
                     </div>
                 </NavLink> : null}
-            </div>
-            <div className="w-full h-px bg-whitemain">
-                &nbsp;
-            </div>
-            <div className="control-div">
-                {user ? <div className="btn-control text-bluemain bg-whitemain hidden sm:flex" onClick={openModal}>
-                    <button type="button">
-                        Account
-                    </button>
-                </div>
-                    :
-                    <div className="btn-control text-bluemain bg-whitemain hidden sm:flex" onClick={openModal}>
+                <div className="control-div">
+                    {user ? <div className="btn-control text-bluemain bg-whitemain flex " onClick={openModal}>
                         <button type="button">
-                            Sign In
+                            Account
                         </button>
                     </div>
-                }
-                <div className="btn-control text-bluemain bg-whitemain sm:hidden" onClick={openModal}>
-                    <HiIcons.HiOutlineUser size="24px" className="ml-1.5" />
+                        :
+                        <div className="btn-control text-bluemain bg-whitemain flex" onClick={openModal}>
+                            <button type="button">
+                                Sign In
+                            </button>
+                        </div>
+                    }
+
+                    {user ? <div className="btn-control text-whitemain bg-orangemain flex" onClick={signOut}>
+                        <button type="button">
+                            Sign Out
+                        </button>
+                    </div> : null}
                 </div>
-
-                {user ? <div className="btn-control text-whitemain bg-orangemain hidden sm:flex" onClick={signOut}>
-                    <button type="button">
-                        Sign Out
-                    </button>
-                </div> : null}
-                <div className="btn-control text-whitemain bg-orangemain flex sm:hidden">
-                    <HiIcons.HiLogout size="24px" className="ml-1.5" />
-                </div>
-
-            </div>
-            <div className="profile">
-                {user ? <img src={user.photoURL} alt="profile" onClick={openModal} /> : null}
-                {user ? <span>{user.displayName}</span> : null}
-            </div>
-
+            </ul>
             {/* popup */}
             {user ?
                 <Transition appear show={isOpen} as={Fragment}>
@@ -242,8 +225,9 @@ function Tabbar({ user }) {
                     </Dialog>
                 </Transition>
             }
-        </aside>
+        </div>
+
     )
 }
 
-export default Tabbar
+export default MobileNav
