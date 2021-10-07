@@ -1,34 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import Tabbar from '../components/Tabbar';
 import axios from 'axios'
-import MobileNav from '../components/MobileNav';
-const Lesson_API = 'https://raningu-api-v2.herokuapp.com/lessons/all_lessons';
+const LessonURL_1 = 'https://raningu-api.herokuapp.com/lessons/lesson1';
+const LessonURL_2 = 'https://raningu-api.herokuapp.com/lessons/lesson2';
 
 function Lesson({ user }) {
-    const [l1, setl1] = useState([])
-    const [l2, setl2] = useState([])
-
-    const getLesson = async () => {
-        try {
-            const res = await axios.get(Lesson_API);
-            setl1(res.data[0].data)
-            setl2(res.data[1].data)
-        } catch (err) {
-            console.error(err);
-        }
-    };
+    const [lesson1, setLesson1] = useState([])
+    const [lesson2, setLesson2] = useState([])
 
     useEffect(() => {
-        getLesson()
+        axios.get(LessonURL_1).then(res => {
+            setLesson1(res.data)
+        });
+        axios.get(LessonURL_2).then(res => {
+            setLesson2(res.data)
+        });
     }, [])
 
     return (
         <>
-            <MobileNav user={user} />
             <Tabbar user={user} />
             <div className="content-container h-screen">
+                <span>Example Word</span>
                 <div className="flex flex-wrap flex-row">
-                    {l1.map((data) => {
+                    {lesson1.map((data) => {
                         return <img src={data.img} className="w-16" alt={data.read} />
                     })}
                 </div>
@@ -36,7 +31,7 @@ function Lesson({ user }) {
                     &nbsp;
                 </div>
                 <div className="flex flex-wrap flex-row">
-                    {l2.map((data) => {
+                    {lesson2.map((data) => {
                         return <img src={data.img} className="w-16" alt={data.read} />
                     })}
                 </div>

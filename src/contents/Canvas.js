@@ -4,7 +4,6 @@ import CanvasDraw from "react-canvas-draw";
 import { RangeStepInput } from 'react-range-step-input';
 import { SketchPicker } from 'react-color';
 import imgTest from '../images/words/ba.png'
-import MobileNav from '../components/MobileNav';
 
 class Canvas extends Component {
     constructor(props) {
@@ -33,7 +32,6 @@ class Canvas extends Component {
     render() {
         return (
             <>
-                <MobileNav user={this.props.user} />
                 <Tabbar user={this.props.user} />
                 <div className="content-container h-screen flex flex-row justify-center items-center">
                     <div className="mx-10">
