@@ -1,5 +1,6 @@
 import React from 'react';
 import Tabbar from '../components/Tabbar';
+import MobileNav from '../components/MobileNav';
 import { Pie } from 'react-chartjs-2';
 
 const data = {
@@ -32,10 +33,11 @@ const data = {
 function Stats({ user }) {
     return (
         <>
+            <MobileNav user={user} />
             <Tabbar user={user} />
             <div className="content-container h-screen">
-                <Pie 
-                    data={data} 
+                <Pie
+                    data={data}
                     width={400}
                     height={400}
                     options={{ maintainAspectRatio: false }}
