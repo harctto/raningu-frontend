@@ -1,17 +1,17 @@
-import React from 'react'
 import Tabbar from '../components/Tabbar'
 import MobileNav from '../components/MobileNav';
+// eslint-disable-next-line
+import React, { useState, useEffect } from 'react'
 
-function Quiz({ user }) {
+export default function Quiz({ user }) {
+
     return (
         <>
             <MobileNav user={user} />
             <Tabbar user={user} />
-            <div className="content-container h-screen justify-center flex items-center text-lg sm:text-9xl">
-                Quiz In process....
+            <div className="content-container h-screen flex justify-center items-center flex-col">
+                
             </div>
         </>
     )
 }
-
-export default Quiz
