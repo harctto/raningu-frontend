@@ -6,7 +6,7 @@ import { Link, useHistory } from 'react-router-dom'
 import Logo from '../images/logo192.png'
 
 //export
-function SignUp({ user }) {
+export default function SignUp({ user }) {
 
     const handleCheckInput = (e) => {
         if (user) {
@@ -56,5 +56,3 @@ function SignUp({ user }) {
         </div>
     )
 }
-
-export default SignUp

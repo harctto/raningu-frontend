@@ -30,7 +30,7 @@ const data = {
     ],
 };
 
-function Stats({ user }) {
+export default function Stats({ user }) {
     return (
         <>
             <MobileNav user={user} />
@@ -46,5 +46,3 @@ function Stats({ user }) {
         </>
     )
 }
-
-export default Stats

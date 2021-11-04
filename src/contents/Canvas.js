@@ -10,7 +10,7 @@ class Canvas extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            color: "#ffda00",
+            color: "#FE6849",
             width: 700,
             height: 600,
             brushRadius: 20,
