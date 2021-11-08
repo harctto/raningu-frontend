@@ -2,10 +2,9 @@
 import './css/App.css';
 //lib-import
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import firebase from './services/FirebaseConfig'
 //components
-// eslint-disable-next-line
 import Signup from './contents/Signup'
 import Home from './contents/Home'
 import Lesson from './contents/Lesson';
@@ -24,24 +23,26 @@ function App() {
   }, []);
 
   return (
-    <Router>  
-    <Redirect from="/" to="/home" />
-      <Route exact path="/signup" component={Signup} />
-      <Route exact path="/home">
-        <Home user={user} />
-      </Route>
-      <Route exact path="/lesson">
-        <Lesson user={user} />
-      </Route>
-      <Route exact path="/quiz">
-        <Quiz user={user} />
-      </Route>
-      <Route exact path="/canvas">
-        <Canvas user={user} />
-      </Route>
-      <Route exact path="/stats">
-        <Stats user={user} />
-      </Route>
+    <Router>
+      <Redirect from="/" to="/home" />
+      <Switch>
+        <Route path="/signup" component={Signup} />
+        <Route path="/home">
+          <Home user={user} />
+        </Route>
+        <Route path="/lesson">
+          <Lesson user={user} />
+        </Route>
+        <Route path="/quiz">
+          <Quiz user={user} />
+        </Route>
+        <Route path="/canvas">
+          <Canvas user={user} />
+        </Route>
+        <Route path="/stats">
+          <Stats user={user} />
+        </Route>
+      </Switch>
     </Router>
   );
 }

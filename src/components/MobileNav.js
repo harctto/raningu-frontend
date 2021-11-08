@@ -7,7 +7,7 @@ import GgLogo from '../images/gg-icon.png'
 import FbLogo from '../images/fb-icon.png'
 import GhLogo from '../images/gh-icon.png'
 
-function MobileNav({ user }) {
+export default function MobileNav({ user }) {
     const [click, setClick] = useState(false);
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
@@ -229,5 +229,3 @@ function MobileNav({ user }) {
 
     )
 }
-
-export default MobileNav

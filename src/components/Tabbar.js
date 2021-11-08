@@ -9,7 +9,7 @@ import GgLogo from '../images/gg-icon.png'
 import FbLogo from '../images/fb-icon.png'
 import GhLogo from '../images/gh-icon.png'
 
-function Tabbar({ user }) {
+export default function Tabbar({ user }) {
     const [isOpen, setIsOpen] = useState(false);
 
     const menuItems = [
@@ -45,7 +45,7 @@ function Tabbar({ user }) {
             </Link>
             <div className="menu-div">
                 {menuItems.map((data) => {
-                    return <NavLink exact activeClassName="active" to={data.path} >
+                    return <NavLink activeClassName="active" to={data.path} >
                         <div className="item">
                             {data.icons}
                             <span>{data.name}</span>
@@ -245,5 +245,3 @@ function Tabbar({ user }) {
         </aside>
     )
 }
-
-export default Tabbar

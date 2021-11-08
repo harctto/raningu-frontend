@@ -2,47 +2,85 @@ import React, { useEffect, useState } from 'react';
 import Tabbar from '../components/Tabbar';
 import axios from 'axios'
 import MobileNav from '../components/MobileNav';
-const Lesson_API = 'https://raningu-api-v2.herokuapp.com/lessons/all_lessons';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useParams,
+    useRouteMatch,
+    Redirect
+} from "react-router-dom";
+const Lesson_API = 'https://raningu-api.glitch.me/data/lessons';
 
-function Lesson({ user }) {
-    const [l1, setl1] = useState([])
-    const [l2, setl2] = useState([])
-
-    const getLesson = async () => {
-        try {
-            const res = await axios.get(Lesson_API);
-            setl1(res.data[0].data)
-            setl2(res.data[1].data)
-        } catch (err) {
-            console.error(err);
-        }
-    };
+//export to app
+export default function Lesson({ user }) {
+    const [lesson, setLesson] = useState([]);
+    let { path, url } = useRouteMatch();
 
     useEffect(() => {
+        const getLesson = async () => {
+            try {
+                const res = await axios.get(Lesson_API);
+                setLesson(res.data)
+                console.log(lesson)
+            } catch (err) {
+                console.error(err);
+            }
+        };
         getLesson()
+        console.log(lesson);
+        // eslint-disable-next-line
     }, [])
 
     return (
         <>
             <MobileNav user={user} />
             <Tabbar user={user} />
-            <div className="content-container h-screen">
-                <div className="flex flex-wrap flex-row">
-                    {l1.map((data) => {
-                        return <img src={data.img} className="w-16" alt={data.read} />
-                    })}
+            <div className="content-container h-screen flex flex-col justify-center items-center">
+                <div className="flex flex-row h-1/6 items-center">
+                    {lesson.length > 0 ? lesson.map((data) => {
+                        return (
+                            <Link to={`${url}/${data.lesson_id}`}>
+                                <div className="lesson-choose-box">
+                                    {data.lesson_name}
+                                </div>
+                            </Link>
+                        )
+                    }) : null}
                 </div>
-                <div className="w-full bg-black h-2">
-                    &nbsp;
-                </div>
-                <div className="flex flex-wrap flex-row">
-                    {l2.map((data) => {
-                        return <img src={data.img} className="w-16" alt={data.read} />
-                    })}
-                </div>
+                <Switch>
+                    <Route exact path={path}>
+                        <div className="lesson-box">
+                            {lesson.length > 0 ?
+                                <span className="text-xl sm:text-4xl">Please select a lesson <br /> (แปะชั่วคราว ตรงนี้เป็น Artwork gif animation)</span>
+                                :
+                                <div class="loader"></div>
+                            }
+                        </div>
+                    </Route>
+                    {/* if don't have lesson redirect to /lesson preventing err */}
+                    <Route path={`${path}/:lessonId`}>
+                        {lesson.length > 0 ? <EachLesson lesson={lesson} />
+                        : <Redirect to="/lesson"/>}
+                    </Route>
+                </Switch>
             </div>
         </>
     )
 }
 
-export default Lesson
+//lesson board
+function EachLesson({ lesson }) {
+    const { lessonId } = useParams();
+
+    return (
+        <>
+            <div className="flex flex-row flex-wrap lesson-box overflow-auto">
+                {lesson ? lesson[lessonId - 1].data.map((data) => {
+                    return <img src={data.img} className="w-20" alt={data.read} />
+                }) : <div class="loader"></div>}
+            </div>
+        </>
+    );
+}
