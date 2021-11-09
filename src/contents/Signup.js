@@ -41,6 +41,7 @@ export default function SignUp() {
             await user.updateProfile({
               displayName: username,
             });
+            window.location.reload();
           })
           .catch((error) => {
             var errorMessage = error.message;
