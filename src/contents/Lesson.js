@@ -3,6 +3,7 @@ import Tabbar from '../components/Tabbar';
 import axios from 'axios'
 import MobileNav from '../components/MobileNav';
 import {
+    // eslint-disable-next-line
     BrowserRouter as Router,
     Switch,
     Route,
