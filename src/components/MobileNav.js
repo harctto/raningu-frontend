@@ -78,7 +78,7 @@ export default function MobileNav({ user }) {
 
   return (
     <div className="sm:hidden relative">
-      <div className="w-full h-16 flex bg-bluemain items-center">
+      <div className="w-full h-16 flex bg-bluemain items-center z-50">
         <HiIcons.HiViewList
           className="ml-2 text-white"
           size="35px"
@@ -141,43 +141,25 @@ export default function MobileNav({ user }) {
           ) : null}
         </div>
       </ul>
-      {/* popup */}
-      {user ? (
-        <Transition appear show={isOpen} as={Fragment}>
-          <Dialog
-            as="div"
-            className="fixed inset-0 z-10 overflow-y-auto"
-            onClose={closeModal}
-          >
-            <div className="min-h-screen px-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <Dialog.Overlay className="fixed inset-0" />
-              </Transition.Child>
 
-              {/* This element is to trick the browser into centering the modal contents. */}
-              <span
-                className="inline-block h-screen align-middle"
-                aria-hidden="true"
-              >
-                &#8203;
-              </span>
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
+      {/* ######################popup###################### */}
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="fixed inset-0 z-50 overflow-y-auto"
+          onClose={closeModal}
+        >
+          <div className="min-h-screen px-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              {user ?
                 <div className="modal-pop-div">
                   {/* headTitle */}
                   <Dialog.Title as="h1">Account</Dialog.Title>
@@ -198,53 +180,14 @@ export default function MobileNav({ user }) {
                     </button>
                   </div>
                 </div>
-              </Transition.Child>
-            </div>
-          </Dialog>
-        </Transition>
-      ) : (
-        <Transition appear show={isOpen} as={Fragment}>
-          <Dialog
-            as="div"
-            className="fixed inset-0 z-10 overflow-y-auto"
-            onClose={closeModal}
-          >
-            <div className="min-h-screen px-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-500"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-500"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <Dialog.Overlay className="fixed inset-0" />
-              </Transition.Child>
-
-              {/* This element is to trick the browser into centering the modal contents. */}
-              <span
-                className="inline-block h-screen align-middle"
-                aria-hidden="true"
-              >
-                &#8203;
-              </span>
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
+                :
                 <div className="modal-pop-div max-w-2xl">
                   {/* headTitle */}
                   <Dialog.Title as="h1"></Dialog.Title>
                   {/* content */}
                   <div className="mt-2">
                     <div class="mt-10 mx-8 transform">
-                      <form onClick={handleSubmit}>
+                      <form onSubmit={handleSubmit}>
                         <div class="mb-3 pt-2 rounded bg-gray-200">
                           <label
                             class="text-gray-700 text-sm font-bold mb-1"
@@ -283,7 +226,6 @@ export default function MobileNav({ user }) {
                             Forgot your password?
                           </a>
                         </div>
-
                         {/* Alert */}
                         {alert && (
                           <div
@@ -304,7 +246,6 @@ export default function MobileNav({ user }) {
                         </button>
                       </form>
                     </div>
-
                     <div class="max-w-lg mx-auto text-center mt-8 mb-6 text-xs sm:text-base ">
                       <p class="text-bluemain">
                         Don't have an account?{" "}
@@ -331,11 +272,11 @@ export default function MobileNav({ user }) {
                     </button>
                   </div>
                 </div>
-              </Transition.Child>
-            </div>
-          </Dialog>
-        </Transition>
-      )}
+              }
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition>
     </div>
   );
 }

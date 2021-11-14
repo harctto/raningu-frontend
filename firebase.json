@@ -18,6 +18,7 @@
         ]
       }
     ],
+    "site": "raningu-edu",
     "public": "build",
     "ignore": [
       "firebase.json",

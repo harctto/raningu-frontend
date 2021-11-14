@@ -2,13 +2,13 @@ import firebase from "firebase/app";
 import "firebase/auth";
 
 const firebaseConfig = firebase.initializeApp({
-  apiKey: "AIzaSyCzPc5yTwV7kwRWrQUqyGJjldP-AB-K9-Y",
-  authDomain: "websitename-csc361.firebaseapp.com",
-  projectId: "websitename-csc361",
-  storageBucket: "websitename-csc361.appspot.com",
-  messagingSenderId: "263414724563",
-  appId: "1:263414724563:web:d74750a3c5ab43f2e46126",
-  measurementId: "G-2MBXH53V8D",
+  apiKey: "AIzaSyANJJvFGIHxR3VEfqhxvpvdyrNT9l6Jr9s",
+  authDomain: "raningu-95d67.firebaseapp.com",
+  projectId: "raningu-95d67",
+  storageBucket: "raningu-95d67.appspot.com",
+  messagingSenderId: "836718238821",
+  appId: "1:836718238821:web:4a145595bbd3d848613a8c",
+  measurementId: "G-X4Q34NG336"
 });
 
 export const auth = firebase.auth();
@@ -51,8 +51,7 @@ const GithubAuthProvider = new firebase.auth.GithubAuthProvider();
 GithubAuthProvider.setCustomParameters({ prompt: "select_account" });
 
 export const signInWithGoogle = () => auth.signInWithPopup(GoogleAuthProvider);
-export const signInWithFacebook = () =>
-  auth.signInWithPopup(FacebookAuthProvider);
+export const signInWithFacebook = () => auth.signInWithPopup(FacebookAuthProvider);
 export const singInWithGithub = () => auth.signInWithPopup(GithubAuthProvider);
 
 export default firebaseConfig;
