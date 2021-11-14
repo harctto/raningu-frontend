@@ -246,6 +246,7 @@
   list-style-type: none;
   grid-gap: 0px;
   padding: 16px 0;
+  z-index: 50;
 }
 
 .nav-options.active {
@@ -253,9 +254,9 @@
   left: 0;
   opacity: 1;
   transition: all 0.5s ease;
-  z-index: 1;
   align-content: center;
   padding-left: 0px;
+  z-index: 50;
 }
 
 .option {
@@ -319,7 +320,98 @@ li {
   m-4 
   p-4 
   rounded-lg 
+  text-xs
+  sm:text-base
   duration-500 
   hover:p-5
-  shadow-lg
+  shadow-lg;
+}
+
+.lesson-table tr:nth-child(even) {
+  @apply
+  bg-graymain;
+}
+
+.canvas canvas:nth-last-child(1) {
+  @apply
+  opacity-40;
+}
+
+/* quiz */
+.quiz-box {
+  @apply
+  h-full
+  w-full
+  mb-5
+  rounded-xl 
+  text-center
+  items-center 
+  flex 
+  flex-col
+  overflow-auto  
+  justify-center;
+}
+
+.quiz-choose-box {
+  @apply
+  h-full
+  w-full
+  mb-5
+  rounded-xl 
+  text-center
+  items-center 
+  flex 
+  lg:flex-row
+  flex-wrap
+  flex-col
+  overflow-auto  
+  justify-center;
+}
+
+.question-section {
+  @apply
+  flex
+  flex-col
+  items-center
+  justify-center;
+}
+
+.question-section .question-text {
+  @apply
+  bg-greenmain
+  px-20
+  py-5
+  rounded-xl
+  text-4xl
+  my-3
+  text-white;
+}
+
+.question-section .question-count {
+  @apply
+  text-4xl
+  font-bold
+}
+
+.answer-section {
+  @apply
+  w-2/3
+  flex
+  flex-col;
+}
+
+.answer-section>button {
+  @apply
+  bg-orangemain
+  text-white
+  py-5  
+  px-20
+  mb-3
+  text-3xl
+  rounded-xl
+  border-b-8
+  border-lightorange
+  duration-500
+  hover:text-5xl
+  hover:py-7;
 }

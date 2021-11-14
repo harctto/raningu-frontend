@@ -3,20 +3,20 @@ import Tabbar from '../components/Tabbar';
 import CanvasDraw from "react-canvas-draw";
 import { RangeStepInput } from 'react-range-step-input';
 import { SketchPicker } from 'react-color';
-import imgTest from '../images/words/ba.png'
 import MobileNav from '../components/MobileNav';
+import axios from 'axios'
+const Canvas_API = "https://raningu-api.glitch.me/data/canvas"
 
 class Canvas extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            color: "#FE6849",
-            width: 700,
-            height: 600,
-            brushRadius: 20,
-            lazyRadius: 5,
-        }
-    }
+    state = {
+        color: "#FE6849",
+        width: 700,
+        height: 600,
+        brushRadius: 20,
+        lazyRadius: 5,
+        hideGrid: true,
+        img: "https://firebasestorage.googleapis.com/v0/b/raningu-95d67.appspot.com/o/canvas%2Fa.png?alt=media"
+    };
 
     handleChangeComplete = (color, event) => {
         this.setState({ color: color.hex });
@@ -27,7 +27,15 @@ class Canvas extends Component {
     }
 
     componentDidMount() {
-        //call
+        const getQuiz = async () => {
+            try {
+                const res = await axios.get(Canvas_API);
+                console.log(res.data)
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        getQuiz()
     }
 
     render() {
@@ -35,7 +43,7 @@ class Canvas extends Component {
             <>
                 <MobileNav user={this.props.user} />
                 <Tabbar user={this.props.user} />
-                <div className="content-container h-screen flex flex-row justify-center items-center">
+                <div className="content-container h-screen flex flex-row justify-center items-center canvas-box">
                     <div className="mx-10">
                         <div className="flex justify-center text-xl">
                             <div className="mx-2">
@@ -68,8 +76,8 @@ class Canvas extends Component {
                             lazyRadius={this.state.lazyRadius}
                             canvasWidth={this.state.width}
                             canvasHeight={this.state.height}
-                            imgSrc={imgTest}
-                            className="my-2 rounded-xl shadow-sm"
+                            imgSrc={this.state.img}
+                            className="my-2 rounded-xl shadow-sm canvas"
                         />
                     </div>
                     <div>

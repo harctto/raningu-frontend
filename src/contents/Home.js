@@ -18,7 +18,7 @@ export default function Home({ user }) {
                         <div className="my-14 text-greenmain text-xs sm:text-2xl">
                             <span className="bg-white shadow-md px-4 rounded-lg font-medium sm:px-12">ようこそ！</span>
                         </div>
-                        <div className="flex sm:flex-row justify-center flex-col">
+                        <div className="flex lg:flex-row justify-center flex-col">
                             <NavLink to="/lesson">
                                 <Card items={'Lesson'} />
                             </NavLink>
