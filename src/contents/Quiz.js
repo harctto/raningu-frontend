@@ -112,6 +112,7 @@ function EachQuiz({ quiz }) {
                     else {
                         return <div className="quiz-box">
                             <div className='question-section'>
+                                You scored {score} out of {quiz[quizId - 1].questions.length}
                                 <div className='question-count'>
                                     <span>Question {currentQuestion + 1}</span>/{quiz[quizId - 1].questions.length}
                                 </div>
