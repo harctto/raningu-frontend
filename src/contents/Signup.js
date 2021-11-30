@@ -29,7 +29,7 @@ export default function SignUp() {
   const hideAlert = () => setAlert(false);
 
   const handleSubmit = async (event) => {
-    hideAlert();
+    hideAlert()
     event.preventDefault();
     if (username && email && password && repassword) {
       if (password === repassword) {

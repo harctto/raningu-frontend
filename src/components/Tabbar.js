@@ -2,7 +2,7 @@ import { React, useState, Fragment } from "react";
 import WebLogo from "../images/logo.png";
 import { NavLink, Link } from "react-router-dom";
 import * as HiIcons from "react-icons/hi";
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   signOut,
   signInWithEmailAndPassword,
@@ -48,6 +48,7 @@ export default function Tabbar({ user }) {
 
   function openModal() {
     setIsOpen(true);
+    console.log(user)
   }
 
   // Login
@@ -189,24 +190,48 @@ export default function Tabbar({ user }) {
             >
               {user ?
                 <div className="modal-pop-div">
-                  {/* headTitle */}
-                  <Dialog.Title as="h1">Account</Dialog.Title>
                   {/* content */}
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      <span>Email : {user.email}</span>
-                    </p>
+                  <div className="mt-2 flex flex-row items-center">
+                    <div className="profilepic">
+                      <img src={user.photoURL} alt="profile" className="w-full" />
+                      {/* edit profile pic */}
+                      <div className="profilepic-content">
+                          <HiIcons.HiPencil size="32px" className="float-right" />
+                      </div>
+                    </div>
+                    <div className="w-4/6 text-left flex flex-col">
+                      <span className="text-2xl cursor-default">
+                        Name
+                      </span>
+                      <span className="border-b-2 font-normal text-xl">
+                        {user.displayName}
+                      </span>
+                      <span className="text-2xl cursor-default flex flex-row items-center">
+                        Email :&nbsp;<span className="font-normal text-xl">{user.email}</span>&nbsp;&nbsp;
+                        {/* edit email */}
+                        <button className="hover:opacity-50 duration-500">
+                          <HiIcons.HiPencil size="20px" />
+                        </button>
+                      </span>
+                      <span className="text-2xl cursor-default flex flex-row items-center">
+                        Password :&nbsp;<span className="font-normal text-xl">****************</span>&nbsp;&nbsp;
+                        <button className="hover:opacity-50 duration-500">
+                          <HiIcons.HiPencil size="20px" />
+                        </button>
+                      </span>
+                      <span className="text-2xl cursor-default flex flex-row items-center">
+                        Provider :&nbsp;<span className="font-normal text-xl">{user.providerData[0].providerId}</span>&nbsp;&nbsp;
+                      </span>
+                    </div>
                   </div>
-                  {/* button */}
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="clsbtn"
-                      onClick={closeModal}
-                    >
-                      Close
-                    </button>
-                  </div>
+                  {/* close */}
+                  <button
+                    type="button"
+                    className="absolute top-4 right-4 hover:opacity-50 duration-500"
+                    onClick={closeModal}
+                  >
+                    <HiIcons.HiX size="32px" />
+                  </button>
                 </div>
                 :
                 <div className="modal-pop-div max-w-2xl">

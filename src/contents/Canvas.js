@@ -15,7 +15,8 @@ class Canvas extends Component {
         brushRadius: 20,
         lazyRadius: 5,
         hideGrid: true,
-        img: "https://firebasestorage.googleapis.com/v0/b/raningu-95d67.appspot.com/o/canvas%2Fa.png?alt=media"
+        img: "https://firebasestorage.googleapis.com/v0/b/raningu-95d67.appspot.com/o/canvas%2Fa.png?alt=media",
+        quizData: []
     };
 
     handleChangeComplete = (color, event) => {
@@ -30,7 +31,9 @@ class Canvas extends Component {
         const getQuiz = async () => {
             try {
                 const res = await axios.get(Canvas_API);
-                console.log(res.data)
+                const quizData = await res.data;
+                this.setState({ quizData })
+                console.log(this.state.quizData);
             } catch (err) {
                 console.error(err);
             }
