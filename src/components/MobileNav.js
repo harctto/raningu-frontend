@@ -1,4 +1,4 @@
-import { React, useState, Fragment } from "react";
+import { React, useState, useEffect, Fragment } from "react";
 import * as HiIcons from "react-icons/hi";
 import { NavLink, Link } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
@@ -12,6 +12,7 @@ import {
 import GgLogo from "../images/gg-icon.png";
 import FbLogo from "../images/fb-icon.png";
 import GhLogo from "../images/gh-icon.png";
+import UserIcon from "../images/default-user.png";
 
 export default function MobileNav({ user }) {
   const [click, setClick] = useState(false);
@@ -44,11 +45,16 @@ export default function MobileNav({ user }) {
 
   function closeModal() {
     setIsOpen(false);
+    setEditUsername(user.displayName);
+    setEditEmail(user.email)
+    setEditPassword("********")
   }
 
   function openModal() {
     setIsOpen(true);
+    closeMobileMenu();
   }
+  
 
   // Login
   const [email, setEmail] = useState("");
@@ -75,6 +81,71 @@ export default function MobileNav({ user }) {
       showAlert("Please type your Email/Password information.");
     }
   };
+
+  // edited
+  const [editUsername, setEditUsername] = useState(user ? user.displayName : "");
+  const [editEmail, setEditEmail] = useState(user ? user.email : "");
+  const [editPassword, setEditPassword] = useState("********");
+
+  useEffect(() => {
+    // update state when user logged in
+    if (user) {
+      setEditUsername(user.displayName)
+      setEditEmail(user.email)
+      setEditPassword("********")
+    } else {
+      return null
+    }
+  },[user])
+
+  const changeUsername = (e) => {
+    setEditUsername(e.target.value);
+  };
+
+  const changeEmail = (e) => {
+    setEditEmail(e.target.value);
+  };
+
+  const changePassword = (e) => {
+    setEditPassword(e.target.value);
+  };
+
+  const updateMethod = () => {
+    if (editUsername !== user.displayName) {
+      user.updateProfile({
+        displayName: editUsername,
+        // photoURL: "https://example.com/jane-q-user/profile.jpg"
+      }).then(() => {
+        // Update successful
+        setEditUsername(user.displayName)
+        // ...
+      }).catch((error) => {
+        // An error occurred
+        // ...
+      });
+    }
+
+    if (editEmail !== user.email) {
+      user.updateEmail(editEmail).then(() => {
+        // Update successful
+        // ...
+      }).catch((error) => {
+        // An error occurred
+        // ...
+      });
+    }
+
+    if (editPassword !== "********") {
+      user.updatePassword(editPassword).then(() => {
+        // Update successful.
+      }).catch((error) => {
+        // An error ocurred
+        // ...
+      });
+    }
+
+    window.location.reload(false);
+  }
 
   return (
     <div className="sm:hidden relative">
@@ -109,7 +180,7 @@ export default function MobileNav({ user }) {
             onClick={closeMobileMenu}
           >
             <div className="option">
-              <HiIcons.HiChartPie size="24px" />
+              <HiIcons.HiOutlineChartBar size="24px" />
               <span>Statistics</span>
             </div>
           </NavLink>
@@ -161,24 +232,72 @@ export default function MobileNav({ user }) {
             >
               {user ?
                 <div className="modal-pop-div">
-                  {/* headTitle */}
-                  <Dialog.Title as="h1">Account</Dialog.Title>
                   {/* content */}
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      <span>Email : {user.email}</span>
-                    </p>
+                  <div className="mt-2 flex flex-col items-center justify-center">
+                    <div className="profilepic">
+                      <img src={user.photoURL ? user.photoURL : UserIcon} alt="profile" className="w-full" />
+                      {/* edit profile pic */}
+                      <div className="profilepic-content">
+                        <HiIcons.HiPencil size="32px" className="float-right" />
+                      </div>
+                    </div>
+                    <div className="w-full flex items-center mt-2 border-b-2 border-gray-200 my-2 self-center">
+                      Name:&nbsp;
+                      <input
+                        type="text"
+                        id="username"
+                        value={editUsername}
+                        onChange={changeUsername}
+                        className="bg-transparent text-center w-full"
+                      />
+                    </div>
+                    <div className="w-full flex self-center my-2">
+                      Email:&nbsp;
+                      <input
+                        type="email"
+                        id="email"
+                        value={editEmail}
+                        onChange={changeEmail}
+                        disabled={user.providerData[0].providerId !== "password" ? "disabled" : ""}
+                        className="bg-transparent text-center w-full"
+                      />
+                    </div>
+                    {user.providerData[0].providerId === "password" &&<div className="w-full flex self-center my-2">
+                      Password:&nbsp;
+                      <input
+                        type="password"
+                        id="password"
+                        value={editPassword}
+                        onChange={changePassword}
+                        className="bg-transparent text-center w-full"
+                      />
+                    </div>}
+                    <div className="w-full flex self-center my-2">
+                      Provider: <span className="w-full text-center">{user.providerData[0].providerId}</span>
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        onClick={updateMethod}
+                        className="bg-greenmain rounded-lg text-white py-1 px-4 hover:py-2 hover:px-5 hover:opacity-80 duration-500 mr-2">
+                        Update
+                      </button>
+                      <button
+                        type="button"
+                        onClick={closeModal}
+                        className="bg-orangemain rounded-lg text-white py-1 px-4 hover:py-2 hover:px-5 hover:opacity-80 duration-500 ml-4">
+                        Cancel
+                      </button>
+                    </div>
                   </div>
-                  {/* button */}
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="clsbtn"
-                      onClick={closeModal}
-                    >
-                      Close
-                    </button>
-                  </div>
+                  {/* close */}
+                  <button
+                    type="button"
+                    className="absolute top-4 right-4 hover:opacity-50 duration-500"
+                    onClick={closeModal}
+                  >
+                    <HiIcons.HiX size="32px" />
+                  </button>
                 </div>
                 :
                 <div className="modal-pop-div max-w-2xl">

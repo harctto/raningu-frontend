@@ -15,6 +15,7 @@ import {
     Redirect
 } from "react-router-dom";
 const Quiz_API = "https://raningu-api.glitch.me/data/quiz"
+const Quiz_Log = "https://raningu-api.glitch.me/log/quiz_log"
 
 
 export default function Quiz({ user }) {
@@ -44,7 +45,7 @@ export default function Quiz({ user }) {
                             {quiz.length > 0 ?
                                 quiz.map((data) => {
                                     return (
-                                        <Link to={`${url}/${data.quiz_id}`} className="text-2xl">
+                                        <Link to={`${url}/${data.quiz_id}`} className="text-2xl sm:mx-4">
                                             <Card items={data.quiz_name} />
                                         </Link>
                                     )
@@ -56,7 +57,7 @@ export default function Quiz({ user }) {
                     </Route>
                     {/* if don't have quiz redirect to /quiz preventing err */}
                     <Route path={`${path}/:quizId`}>
-                        {quiz.length > 0 ? <EachQuiz quiz={quiz} />
+                        {quiz.length > 0 ? <EachQuiz quiz={quiz} user={user} />
                             : <Redirect to="/quiz" />}
                     </Route>
                 </Switch>
@@ -65,7 +66,7 @@ export default function Quiz({ user }) {
     )
 }
 
-function EachQuiz({ quiz }) {
+function EachQuiz({ quiz, user }) {
     const { quizId } = useParams();
 
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -74,6 +75,7 @@ function EachQuiz({ quiz }) {
     const [score, setScore] = useState(0);
 
     const handleAnswerOptionClick = (isCorrect) => {
+        console.log(quiz);
         if (isCorrect) {
             setScore(score + 1);
         }
@@ -81,8 +83,19 @@ function EachQuiz({ quiz }) {
         const nextQuestion = currentQuestion + 1;
         if (nextQuestion < quiz[0].questions.length) {
             setCurrentQuestion(nextQuestion);
-        } else {
-            setShowScore(true);
+        } 
+        
+        // post to log api
+        if (nextQuestion + 1 === quiz[0].questions.length) {
+            (async () => {
+                await axios.post(Quiz_Log, {
+                    uid: user.uid,
+                    date: Date.now(),
+                    quiz_name: quiz[quizId - 1].quiz_name,
+                    score: score
+                })
+              })();
+              setShowScore(true);
         }
     };
 

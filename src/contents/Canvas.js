@@ -1,119 +1,163 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import Tabbar from '../components/Tabbar';
-import CanvasDraw from "react-canvas-draw";
-import { RangeStepInput } from 'react-range-step-input';
-import { SketchPicker } from 'react-color';
 import MobileNav from '../components/MobileNav';
+import CanvasDraw from "react-canvas-draw";
+import {
+    // eslint-disable-next-line
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useParams,
+    useRouteMatch,
+    Redirect,
+    useHistory
+} from "react-router-dom";
 import axios from 'axios'
 const Canvas_API = "https://raningu-api.glitch.me/data/canvas"
 
-class Canvas extends Component {
-    state = {
-        color: "#FE6849",
-        width: 700,
-        height: 600,
-        brushRadius: 20,
-        lazyRadius: 5,
-        hideGrid: true,
-        img: "https://firebasestorage.googleapis.com/v0/b/raningu-95d67.appspot.com/o/canvas%2Fa.png?alt=media",
-        quizData: []
-    };
+export default function Canvas({ user }) {
+    const [canvasData, setCanvasData] = useState([]);
+    let { path, url } = useRouteMatch();
 
-    handleChangeComplete = (color, event) => {
-        this.setState({ color: color.hex });
-    };
-
-    handleChange = (color, event) => {
-        this.setState({ color: color.hex });
-    }
-
-    componentDidMount() {
-        const getQuiz = async () => {
+    useEffect(() => {
+        const getCanvas = async () => {
             try {
                 const res = await axios.get(Canvas_API);
-                const quizData = await res.data;
-                this.setState({ quizData })
-                console.log(this.state.quizData);
+                setCanvasData(res.data)
             } catch (err) {
                 console.error(err);
             }
         };
-        getQuiz()
-    }
+        getCanvas()
+        // eslint-disable-next-line
+    }, [])
 
-    render() {
-        return (
-            <>
-                <MobileNav user={this.props.user} />
-                <Tabbar user={this.props.user} />
-                <div className="content-container h-screen flex flex-row justify-center items-center canvas-box">
-                    <div className="mx-10">
-                        <div className="flex justify-center text-xl">
-                            <div className="mx-2">
-                                <label>Brush-Radius : {this.state.brushRadius}</label>
-                                <RangeStepInput
-                                    min={1} max={40}
-                                    value={this.state.brushRadius} step={1}
-                                    onChange={e =>
-                                        this.setState({ brushRadius: parseInt(e.target.value, 10) })
-                                    }
-                                    className="mx-3"
-                                />
-                            </div>
-                            <div className="mx-2">
-                                <label>Lazy-Radius : {this.state.lazyRadius}</label>
-                                <RangeStepInput
-                                    min={0} max={24}
-                                    value={this.state.lazyRadius} step={1}
-                                    onChange={e =>
-                                        this.setState({ lazyRadius: parseInt(e.target.value, 10) })
-                                    }
-                                    className="mx-3"
-                                />
-                            </div>
-                        </div>
-                        <CanvasDraw
-                            ref={canvasDraw => (this.saveableCanvas = canvasDraw)}
-                            brushColor={this.state.color}
-                            brushRadius={this.state.brushRadius}
-                            lazyRadius={this.state.lazyRadius}
-                            canvasWidth={this.state.width}
-                            canvasHeight={this.state.height}
-                            imgSrc={this.state.img}
-                            className="my-2 rounded-xl shadow-sm canvas"
-                        />
-                    </div>
-                    <div>
-                        <SketchPicker
-                            className="shadow-none color-box mb-5"
-                            color={this.state.color}
-                            onChangeComplete={this.handleChangeComplete}
-                            onChange={this.handleChange}
-                        />
-                        <div className="flex flex-row justify-evenly">
-                            <button
-                                onClick={() => {
-                                    this.saveableCanvas.undo();
-                                }}
-                                className="m-2 transition-all duration-500 hover:bg-yellow-300 py-2 px-6 bg-yellow-400 text-white rounded shadow-sm"
-                            >
-                                Undo
-                            </button>
-                            <button
-                                onClick={() => {
-                                    this.saveableCanvas.clear();
-                                }}
-                                className="m-2 transition-all duration-500 hover:bg-red-400 py-2 px-6 bg-red-600 text-white rounded shadow-sm"
-                            >
-                                Clear
-                            </button>
-                        </div>
-                    </div>
+    return (
+        <>
+            <MobileNav user={user} />
+            <Tabbar user={user} />
+            <div className="content-container h-screen flex flex-col justify-center items-center canvas-box">
+                <div className="flex flex-row h-1/6 items-center overflow-auto">
+                    {canvasData.length > 0 ? canvasData.map((data) => {
+                        return (
+                            <Link to={`${url}/${data.canvas_name}`}>
+                                <div className="lesson-choose-box">
+                                    <span>
+                                        {data.canvas_name}
+                                    </span>
+                                </div>
+                            </Link>
+                        )
+                    }) : null}
                 </div>
-
-            </>
-        );
-    }
+                <Switch>
+                    <Route exact path={path}>
+                        <div className="flex flex-col flex-wrap h-1/6 overflow-auto w-4/5">
+                            {canvasData.length > 0 ?
+                                <span className="text-xl text-center sm:text-4xl">Please select Hiragana or Katakana</span>
+                                :
+                                <div className="loader self-center"></div>
+                            }
+                        </div>
+                    </Route>
+                    <Route path={`${path}/:canvasName`}>
+                        {canvasData.length > 0 ? <EachCanvas canvasData={canvasData} />
+                            : <Redirect to="/canvas" />}
+                    </Route>
+                </Switch>
+            </div>
+        </>
+    )
 }
 
-export default Canvas
+function EachCanvas({ canvasData }) {
+    const { canvasName } = useParams();
+    let { path, url } = useRouteMatch();
+
+    return (
+        <>
+            <Switch>
+                <Route exact path={path}>
+                    <div className="flex flex-col flex-wrap h-4/6 overflow-auto w-4/5">
+                        {canvasData.length > 0 ? (() => {
+                            if (canvasName === 'Hiragana')
+                                return <>
+                                    {canvasData.length > 0 ? canvasData[0].data.map((data) => {
+                                        return (
+                                            <Link to={`${url}/${data.id}`} >
+                                                <div className="canvas-choose-box">
+                                                    <img src={data.img} className="w-28" alt={data.read} />
+                                                </div>
+                                            </Link>
+                                        )
+                                    }) : console.log('error')}
+                                </>
+                            else
+                                return <>
+                                    {canvasData.length > 0 ? canvasData[1].data.map((data) => {
+                                        return (
+                                            <Link to={`${url}/${data.id}`} >
+                                                <div className="canvas-choose-box">
+                                                    <img src={data.img} className="w-28" alt={data.read} />
+                                                </div>
+                                            </Link>
+                                        )
+                                    }) : console.log('error')}
+                                </>
+                        })()
+                            : null}
+                    </div>
+                </Route>
+                <Route path={`${path}/:canvasId`}>
+                    {canvasData.length > 0 ? <DrawingSection canvasData={canvasData} />
+                        : null
+                    }
+                </Route>
+            </Switch>
+        </>
+    )
+}
+
+function DrawingSection({ canvasData }) {
+    const { canvasName } = useParams();
+    const { canvasId } = useParams();
+
+    const [img, setImg] = useState(canvasData.find(canvas => canvas.canvas_name === canvasName))
+
+    const history = useHistory()
+
+    const routeChange = () => {
+        let path = `/canvas/${canvasName}`;
+        history.push(path);
+    }
+
+    useEffect(() => {
+        const cv_name = canvasData.find(canvas => canvas.canvas_name === canvasName)
+        setImg(cv_name.data[canvasId - 1].img)
+        console.log(img);
+    }, [img, canvasData, canvasId, canvasName])
+
+    return (
+        <>
+            {img.length > 0 ?
+                <div className="flex flex-col flex-wrap h-5/6 overflow-auto w-4/5">
+                    <button onClick={routeChange} className="bg-bluemain w-3/5 self-center mb-8 py-2 text-white rounded-xl hover:py-3 duration-500">
+                        back
+                    </button>
+                    <div className="self-center w-4/5 flex flex-col">
+                        <CanvasDraw
+                            brushColor={'#FE6849'}
+                            brushRadius={15}
+                            imgSrc={img}
+                            lazyRadius={0}
+                            className="my-2 rounded-xl shadow-sm canvas self-center inline-blocking"
+                        />
+                    </div>
+                </div>
+                :
+                <div className="loader"></div>
+            }
+        </>
+    )
+}

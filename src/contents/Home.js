@@ -19,13 +19,13 @@ export default function Home({ user }) {
                             <span className="bg-white shadow-md px-4 rounded-lg font-medium sm:px-12">ようこそ！</span>
                         </div>
                         <div className="flex lg:flex-row justify-center flex-col">
-                            <NavLink to="/lesson">
+                            <NavLink to="/lesson" className="mx-0 sm:mx-4">
                                 <Card items={'Lesson'} />
                             </NavLink>
-                            <NavLink to="/quiz">
+                            <NavLink to="/quiz" className="mx-0 sm:mx-4">
                                 <Card items={'Quiz'} />
                             </NavLink>
-                            <NavLink to="/canvas">
+                            <NavLink to="/canvas" className="mx-0 sm:mx-4">
                                 <Card items={'Canvas'} />
                             </NavLink>
                         </div>

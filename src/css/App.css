@@ -308,13 +308,12 @@ li {
   items-center 
   flex 
   justify-center 
-  shadow-lg
-  bg-white;
+  bg-whitemain;
 }
 
 .lesson-choose-box {
   @apply
-  bg-orangemain 
+  bg-greenmain 
   text-white 
   m-4 
   p-4 
@@ -329,11 +328,27 @@ li {
 .lesson-table tr:nth-child(even) {
   @apply
   bg-graymain;
+  max-width: 700px;
+}
+
+/* canvas */
+.canvas-choose-box {
+  @apply
+  bg-white 
+  m-2
+  rounded-lg 
+  text-xs
+  duration-500
+  hover:bg-whitemain 
+  hover:px-5
+  shadow-sm
+  ;
 }
 
 .canvas canvas:nth-last-child(1) {
   @apply
   opacity-40;
+  width: fit-content;
 }
 
 /* quiz */
@@ -418,8 +433,9 @@ li {
 .profilepic-content {
   @apply
   absolute
-  top-0 right-0 bottom-0 left-0
+  right-0 bottom-0
   flex flex-col
+  self-center
   justify-center
   items-center
   text-whitemain
@@ -431,7 +447,7 @@ li {
 .profilepic {
   @apply
   w-2/6
-  mr-10
+  mb-10
   bg-gray-700
   overflow-hidden
   rounded-full
@@ -451,4 +467,23 @@ li {
   opacity-50
   transition-all
   duration-500
+}
+
+.card-interactive {
+  @apply
+  lg:mx-2 
+  lg:px-16 
+  lg:py-36 
+  text-white 
+  bg-greenmain 
+  rounded-xl
+  transform 
+  duration-500 
+  cursor-pointer 
+  shadow-md 
+  hover:scale-110 
+  mx-4 
+  my-2 
+  py-10 
+  sm:w-full
 }

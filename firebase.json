@@ -1,11 +1,4 @@
 {
-  "emulators": {
-    "hosting": {
-      "target": "raningu",
-      "port": 5000,
-      "host": "raningu--preview-live-60ahtr6x"
-    }
-  },
   "hosting": {
     "headers": [
       {

@@ -1,78 +1,26 @@
-{
-    "lesson_id": 3,
-    "lesson_name": "Lesson 3 : Colors",
-    "data": [
-        {
-            "id": 1,
-            "word": "いろ",
-            "read": "อิโระ",
-            "meaning": "สี"
+[
+    {
+        "_id": {
+            "$oid": "61a937a462838c4319a6488b"
         },
-        {
-            "id": 2,
-            "word": "あか",
-            "read": "อะกะ",
-            "meaning": "สีแดง"
+        "uid": "7R2hthgx0MdausRCqqZsBlPVC9C2",
+        "date": {
+            "$date": "2021-12-02T21:16:19.105Z"
         },
-        {
-            "id": 3,
-            "word": "きいろ",
-            "read": "คิอิโระ",
-            "meaning": "สีเหลือง"
+        "score": 4,
+        "quiz_name": "Quiz 1 : Alphabet",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "61a94b3b5507e11d9f6f3c72"
         },
-        {
-            "id": 4,
-            "word": "みどり",
-            "read": "มิโดะริ",
-            "meaning": "สีเขียว"
+        "uid": "7R2hthgx0MdausRCqqZsBlPVC9C2",
+        "date": {
+            "$date": "2021-12-02T22:40:55.131Z"
         },
-        {
-            "id": 5,
-            "word": "あお",
-            "read": "อะโอะ",
-            "meaning": "สีน้ำเงิน"
-        },
-        {
-            "id": 6,
-            "word": "むらさき",
-            "read": "มุระซะกิ",
-            "meaning": "สีม่วง"
-        },
-        {
-            "id": 7,
-            "word": "しろ",
-            "read": "ชิโระ",
-            "meaning": "สีขาว"
-        },
-        {
-            "id": 8,
-            "word": "くろ",
-            "read": "คุโระ",
-            "meaning": "สีดำ"
-        },
-        {
-            "id": 9,
-            "word": "ピンク",
-            "read": "โมโมะ",
-            "meaning": "สีชมพู"
-        },
-        {
-            "id": 10,
-            "word": "ちゃいろ",
-            "read": "ชะอิโระ",
-            "meaning": "สีน้ำตาล"
-        },
-        {
-            "id": 11,
-            "word": "はいいろ",
-            "read": "ไฮอิโระ",
-            "meaning": "สีเทา"
-        },
-        {
-            "id": 12,
-            "word": "オレンジ",
-            "read": "โอะเร็นจิ",
-            "meaning": "สีส้ม"
-        }
-    ]
-}
+        "score": 4,
+        "quiz_name": "Quiz 1 : Alphabet",
+        "__v": 0
+    }
+]

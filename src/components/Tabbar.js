@@ -1,8 +1,8 @@
-import { React, useState, Fragment } from "react";
+import { React, useState, useEffect, Fragment } from "react";
 import WebLogo from "../images/logo.png";
 import { NavLink, Link } from "react-router-dom";
 import * as HiIcons from "react-icons/hi";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 import {
   signOut,
   signInWithEmailAndPassword,
@@ -44,11 +44,13 @@ export default function Tabbar({ user }) {
 
   function closeModal() {
     setIsOpen(false);
+    setEditUsername(user.displayName);
+    setEditEmail(user.email)
+    setEditPassword("********")
   }
 
   function openModal() {
     setIsOpen(true);
-    console.log(user)
   }
 
   // Login
@@ -77,6 +79,71 @@ export default function Tabbar({ user }) {
     }
   };
 
+  // edited
+  const [editUsername, setEditUsername] = useState(user ? user.displayName : "");
+  const [editEmail, setEditEmail] = useState(user ? user.email : "");
+  const [editPassword, setEditPassword] = useState("********");
+
+  useEffect(() => {
+    // update state when user logged in
+    if (user) {
+      setEditUsername(user.displayName)
+      setEditEmail(user.email)
+      setEditPassword("********")
+    } else {
+      return null
+    }
+  }, [user])
+
+  const changeUsername = (e) => {
+    setEditUsername(e.target.value);
+  };
+
+  const changeEmail = (e) => {
+    setEditEmail(e.target.value);
+  };
+
+  const changePassword = (e) => {
+    setEditPassword(e.target.value);
+  };
+
+  const updateMethod = () => {
+    if (editUsername !== user.displayName) {
+      user.updateProfile({
+        displayName: editUsername,
+        // photoURL: "https://example.com/jane-q-user/profile.jpg"
+      }).then(() => {
+        // Update successful
+        setEditUsername(user.displayName)
+        // ...
+      }).catch((error) => {
+        // An error occurred
+        // ...
+      });
+    }
+
+    if (editEmail !== user.email) {
+      user.updateEmail(editEmail).then(() => {
+        // Update successful
+        // ...
+      }).catch((error) => {
+        // An error occurred
+        // ...
+      });
+    }
+
+    if (editPassword !== "********") {
+      user.updatePassword(editPassword).then(() => {
+        // Update successful.
+      }).catch((error) => {
+        // An error ocurred
+        // ...
+      });
+    }
+
+    window.location.reload(false);
+  }
+
   return (
     <aside className="sidebar-div">
       <Link to="/home">
@@ -99,7 +166,7 @@ export default function Tabbar({ user }) {
         {user ? (
           <NavLink exact activeClassName="active" to="/stats">
             <div className="item">
-              <HiIcons.HiChartPie size="24px" />
+              <HiIcons.HiOutlineChartBar size="24px" />
               <span>Statistics</span>
             </div>
           </NavLink>
@@ -191,47 +258,63 @@ export default function Tabbar({ user }) {
               {user ?
                 <div className="modal-pop-div">
                   {/* content */}
-                  <div className="mt-2 flex flex-row items-center">
+                  <div className="mt-2 flex flex-col items-center justify-center">
                     <div className="profilepic">
-                      <img src={user.photoURL} alt="profile" className="w-full" />
+                      <img src={user.photoURL ? user.photoURL : UserIcon} alt="profile" className="w-full" />
                       {/* edit profile pic */}
-                      <div className="profilepic-content">
-                          <HiIcons.HiPencil size="32px" className="float-right" />
-                      </div>
+                      <button className="profilepic-content">
+                        <HiIcons.HiPencil size="32px" className="float-right" />
+                      </button>
                     </div>
-                    <div className="w-4/6 text-left flex flex-col">
-                      <span className="text-2xl cursor-default">
-                        Name
-                      </span>
-                      <span className="border-b-2 font-normal text-xl">
-                        {user.displayName}
-                      </span>
-                      <span className="text-2xl cursor-default flex flex-row items-center">
-                        Email :&nbsp;<span className="font-normal text-xl">{user.email}</span>&nbsp;&nbsp;
-                        {/* edit email */}
-                        <button className="hover:opacity-50 duration-500">
-                          <HiIcons.HiPencil size="20px" />
-                        </button>
-                      </span>
-                      <span className="text-2xl cursor-default flex flex-row items-center">
-                        Password :&nbsp;<span className="font-normal text-xl">****************</span>&nbsp;&nbsp;
-                        <button className="hover:opacity-50 duration-500">
-                          <HiIcons.HiPencil size="20px" />
-                        </button>
-                      </span>
-                      <span className="text-2xl cursor-default flex flex-row items-center">
-                        Provider :&nbsp;<span className="font-normal text-xl">{user.providerData[0].providerId}</span>&nbsp;&nbsp;
-                      </span>
+                    <div className="w-full flex items-center mt-2 border-b-2 border-gray-200 my-2 self-center">
+                      Name:&nbsp;
+                      <input
+                        type="text"
+                        id="username"
+                        value={editUsername}
+                        onChange={changeUsername}
+                        className="bg-transparent text-center w-full"
+                      />
+                    </div>
+                    <div className="w-full flex self-center my-2">
+                      Email:&nbsp;
+                      <input
+                        type="email"
+                        id="email"
+                        value={editEmail}
+                        onChange={changeEmail}
+                        disabled = {user.providerData[0].providerId !== "password" ? "disabled" : ""}
+                        className="bg-transparent text-center w-full"
+                      />
+                    </div>
+                    {user.providerData[0].providerId === "password" && <div className="w-full flex self-center my-2">
+                      Password:&nbsp;
+                      <input
+                        type="password"
+                        id="password"
+                        value={editPassword}
+                        onChange={changePassword}
+                        className="bg-transparent text-center w-full"
+                      />
+                    </div>}
+                    <div className="w-full flex self-center my-2">
+                      Provider: <span className="w-full text-center">{user.providerData[0].providerId}</span>
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        onClick={updateMethod}
+                        className="bg-greenmain rounded-lg text-white py-1 px-4 hover:py-2 hover:px-5 hover:opacity-80 duration-500 mr-2">
+                        Update
+                      </button>
+                      <button
+                        type="button"
+                        onClick={closeModal}
+                        className="bg-orangemain rounded-lg text-white py-1 px-4 hover:py-2 hover:px-5 hover:opacity-80 duration-500 ml-4">
+                        Cancel
+                      </button>
                     </div>
                   </div>
-                  {/* close */}
-                  <button
-                    type="button"
-                    className="absolute top-4 right-4 hover:opacity-50 duration-500"
-                    onClick={closeModal}
-                  >
-                    <HiIcons.HiX size="32px" />
-                  </button>
                 </div>
                 :
                 <div className="modal-pop-div max-w-2xl">

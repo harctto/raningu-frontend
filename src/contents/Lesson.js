@@ -14,6 +14,7 @@ import {
     useRouteMatch,
     Redirect
 } from "react-router-dom";
+import Artboard from '../images/lesson_artboard.gif'
 const Lesson_API = 'https://raningu-api.glitch.me/data/lessons';
 
 //export to app
@@ -39,7 +40,7 @@ export default function Lesson({ user }) {
             <MobileNav user={user} />
             <Tabbar user={user} />
             <div className="content-container h-screen flex flex-col justify-center items-center">
-                <div className="flex flex-row h-1/6 items-center">
+                <div className="flex flex-row h-1/6 items-center overflow-auto w-4/5">
                     {lesson.length > 0 ? lesson.map((data) => {
                         return (
                             <Link to={`${url}/${data.lesson_id}`}>
@@ -54,11 +55,11 @@ export default function Lesson({ user }) {
                 </div>
                 <Switch>
                     <Route exact path={path}>
-                        <div className="lesson-box">
+                        <div className="w-5/6 sm:inline-block">
                             {lesson.length > 0 ?
-                                <span className="text-xl sm:text-4xl">Please select a lesson <br /> (แปะชั่วคราว ตรงนี้เป็น Artwork gif animation)</span>
+                                <img src={Artboard} alt="lesson_artboard" className="rounded-lg shadow-md"/>
                                 :
-                                <div className="loader"></div>
+                                <div className="loader self-center"></div>
                             }
                         </div>
                     </Route>
@@ -90,7 +91,7 @@ function EachLesson({ lesson }) {
                     (() => {
                         if (lessonId >= 1 && lessonId <= 2)
                             return <>
-                                <div className="sm:text-2xl py-5 bg-greenmain text-white w-full">
+                                <div className="sm:text-2xl py-5 bg-orangemain text-white w-full">
                                     Press on a word to hear the sound.
                                 </div>
                                 <div>
@@ -103,7 +104,7 @@ function EachLesson({ lesson }) {
                             </>
                         else
                             return <>
-                                <table className="table-auto w-full  lesson-table">
+                                <table className="table-auto w-full lesson-table">
                                     <thead>
                                         <tr className="bg-lightorange text-white tracking-widest sm:text-2xl text-sm">
                                             <th className="w-1/4 py-3">Word</th>
@@ -125,7 +126,7 @@ function EachLesson({ lesson }) {
                                 </table>
                             </>
                     })()
-                    : <div className="loader"></div>
+                    : <div className="loader self-center"></div>
                 }
             </div>
         </>

@@ -45,7 +45,11 @@ function App() {
           <Canvas user={user} />
         </Route>
         <Route path="/stats">
-          <Stats user={user} />
+          {user ? (
+            <Stats user={user} />
+          ) :
+            <Redirect to="/" />
+          }
         </Route>
         <Route path="/signup">
           {user ? (
