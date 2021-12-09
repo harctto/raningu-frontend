@@ -1,30 +1,23 @@
 # Raningu Frontend
 
-This is final project Web Programming
+Raningu Frontend with ReactJS for final project (CSC361 Web Programming)
 
 ## Library used
 
-- "@craco/craco"
-- "@headlessui/react"
-- "axios"
-- "chart.js"
-- "firebase"
-- "react"
-- "react-canvas-draw"
-- "react-chartjs-2"
-- "react-color"
-- "react-dom"
-- "react-icons"
-- "react-range-step-input"
-- "react-router-dom"
-- "react-scripts"
+-	axios
+-	firebase
+-	react-canvas-draw
+-	react-icons
+-	react-chartjs-2
+-	react-router-dom
+-	react-speech-kit
+-	@craco/craco
+-	@headlessui/react
+
 
 ## Css framework
 
 "Tailwindcss" -> [Docs](https://tailwindcss.com/docs)
 
 ## Website Deploy link
-[Raningu](https://websitename-csc361.web.app/)
-
-## Figma Design
-[Figma](https://www.figma.com/file/yzVHWtBewUSjG8fDeHyuqS/Web-Pro-Design?node-id=0%3A1&viewport=241%2C48%2C0.24)
+[Raningu](https://raningu-edu.web.app/home)
