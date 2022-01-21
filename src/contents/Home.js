@@ -1,12 +1,11 @@
 import React from 'react';
 import Tabbar from '../components/Tabbar';
 import MobileNav from '../components/MobileNav';
-import Card from '../components/Card';
+import Card from '../components/Card';  
 import { NavLink } from 'react-router-dom';
 
 export default function Home({ user }) {
 
-    console.log(user)
     return (
         <>
             <MobileNav user={user} />

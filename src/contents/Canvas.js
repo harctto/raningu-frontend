@@ -72,6 +72,8 @@ export default function Canvas({ user }) {
 }
 
 function EachCanvas({ canvasData }) {
+
+    
     const { canvasName } = useParams();
     let { path, url } = useRouteMatch();
 
@@ -135,7 +137,6 @@ function DrawingSection({ canvasData }) {
     useEffect(() => {
         const cv_name = canvasData.find(canvas => canvas.canvas_name === canvasName)
         setImg(cv_name.data[canvasId - 1].img)
-        console.log(img);
     }, [img, canvasData, canvasId, canvasName])
 
     return (

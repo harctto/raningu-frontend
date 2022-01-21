@@ -1,7 +1,7 @@
 import Tabbar from '../components/Tabbar'
 import MobileNav from '../components/MobileNav';
 // eslint-disable-next-line
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Card from '../components/Card'
 import {
@@ -71,11 +71,9 @@ function EachQuiz({ quiz, user }) {
 
     const [currentQuestion, setCurrentQuestion] = useState(0);
     // eslint-disable-next-line
-    const [showScore, setShowScore] = useState(false);
     const [score, setScore] = useState(0);
 
     const handleAnswerOptionClick = (isCorrect) => {
-        console.log(quiz);
         if (isCorrect) {
             setScore(score + 1);
         }
@@ -87,15 +85,16 @@ function EachQuiz({ quiz, user }) {
         
         // post to log api
         if (nextQuestion + 1 === quiz[0].questions.length) {
-            (async () => {
-                await axios.post(Quiz_Log, {
-                    uid: user.uid,
-                    date: Date.now(),
-                    quiz_name: quiz[quizId - 1].quiz_name,
-                    score: score
-                })
-              })();
-              setShowScore(true);
+            if (user) {
+                (async () => {
+                    await axios.post(Quiz_Log, {
+                        uid: user.uid,
+                        date: Date.now(),
+                        quiz_name: quiz[quizId - 1].quiz_name,
+                        score: score
+                    })
+                  })();
+            }
         }
     };
 
@@ -111,15 +110,6 @@ function EachQuiz({ quiz, user }) {
                                     back
                                 </div>
                             </Link>
-
-                            {/* test filter anser */}
-                            {(quiz[quizId - 1].questions.map((data) => {
-                                return console.log((data.answerOptions.filter(x =>
-                                    x.isCorrect === true)
-                                ))
-                            }))}
-                            {/* end test */}
-
                         </div>
                     }
                     else {

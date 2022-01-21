@@ -45,8 +45,10 @@ export default function MobileNav({ user }) {
 
   function closeModal() {
     setIsOpen(false);
-    setEditUsername(user.displayName);
-    setEditEmail(user.email)
+    if (user) {
+      setEditUsername(user.displayName);
+      setEditEmail(user.email)
+    }
     setEditPassword("********")
   }
 
@@ -185,7 +187,7 @@ export default function MobileNav({ user }) {
             </div>
           </NavLink>
         ) : null}
-        <div className="control-div">
+        <div className="control-div mt-4">
           {user ? (
             <div
               className="btn-control text-bluemain bg-whitemain flex "

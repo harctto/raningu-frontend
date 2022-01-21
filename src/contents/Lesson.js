@@ -55,7 +55,7 @@ export default function Lesson({ user }) {
                 </div>
                 <Switch>
                     <Route exact path={path}>
-                        <div className="w-5/6 sm:inline-block">
+                        <div className="w-5/6 sm:flex">
                             {lesson.length > 0 ?
                                 <img src={Artboard} alt="lesson_artboard" className="rounded-lg shadow-md"/>
                                 :

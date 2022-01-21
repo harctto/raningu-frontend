@@ -1,7 +1,7 @@
 // eslint-disable-next-line
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // eslint-disable-next-line
-import { Link, useHistory, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 //LocalIMG
 import Logo from "../images/logo192.png";
 
@@ -55,10 +55,8 @@ export default function SignUp() {
     }
   };
 
-  useEffect(() => {});
-
   return (
-    <div class="flex flex-center items-center justify-center bg-bluemain overflow-hidden h-screen">
+    <div class="flex flex-center items-center justify-center bg-bluemain overflow-auto h-screen">
       <div className="flex justify-center flex-col body-bg h-screen pt-12 md:pt-0 pb-6 px-2 md:px-0 w-full sm:w-1/2 mt-4">
         <header class="max-w-lg mx-auto text-center">
           <section class="flex justify-center items-center flex-col">

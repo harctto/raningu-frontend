@@ -2,12 +2,14 @@
 import "./css/App.css";
 //lib-import
 import React, { useEffect, useState } from "react";
+
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
   Switch,
 } from "react-router-dom";
+
 import firebase from "./services/FirebaseConfig";
 //components
 import Signup from "./contents/Signup";
@@ -17,7 +19,7 @@ import Quiz from "./contents/Quiz";
 import Canvas from "./contents/Canvas";
 import Stats from "./contents/Stats";
 
-function App() {
+export default function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -66,5 +68,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;
